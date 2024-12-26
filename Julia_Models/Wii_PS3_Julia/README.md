@@ -7,3 +7,5 @@ Wii-PS3間プラットフォーム競争の時系列変化グラフ出力 と評
 Wii-PS3間プラットフォーム競争結果の等高線図出力 -> contourWiiPS3comp.jpynb
 
 Wii-PS3間プラットフォーム競争結果の等高線図回帰推定と評価 -> estimateMHG_WiiPS3comp.jpynb
+
+Wii-PS3事例の近似計算結果
