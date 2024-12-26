@@ -1,0 +1,1000 @@
+{UTF-8}
+Platform A Adopters[end user side]= INTEG (
+	New Adopters A[end user side]+Switchers to A[end user side]-Switchers to B[end user side\
+		]-Platform A Exit[end user side],
+		919642) ~~|
+Platform A Adopters[complementor side]= INTEG (
+	New Adopters A[complementor side]+Switchers to A[complementor side]-Switchers to B[complementor side\
+		]-Platform A Exit[complementor side],
+		11)
+	~	User
+	~		|
+
+Platform B Adopters[end user side]= INTEG (
+	Switchers to B[end user side]+New Adopters B[end user side]-Switchers to A[end user side\
+		]-Platform B Exit[end user side],
+		187836) ~~|
+Platform B Adopters[complementor side]= INTEG (
+	Switchers to B[complementor side]+New Adopters B[complementor side]-Switchers to A[complementor side\
+		]-Platform B Exit[complementor side],
+		5)
+	~	User
+	~		|
+
+Potential Adopters[side]= INTEG (
+	-New Adopters A[side]-New Adopters B[side],
+		Total Population[side]-Platform A Adopters[side]-Platform B Adopters[side])
+	~	User
+	~		|
+
+Mutlhomig Ratio[side]=
+	ZIDZ(Multihoming Users[side],(Accumulated Adopters A[side]+Accumulated Adopters B[side\
+		]))
+	~	Dmnl
+	~		~	:SUPPLEMENTARY 
+	|
+
+Value to Non Platform A Adopters[end user side]=
+	Expected Quality A*Complement Value to Platform A[complementor side]*(Platform A Adopter Fraction\
+		[complementor side])^Indirect Network Effects Strength A ~~|
+Value to Non Platform A Adopters[complementor side]=
+	Expected Quality A*Complement Value to Platform A[end user side]*(Platform A Adopter Fraction\
+		[end user side])^Indirect Network Effects Strength A
+	~	Dmnl
+	~		|
+
+Value to Non Platform B Adopters[end user side]=
+	Expected Quality B*Complement Value to Platform B[complementor side]*(Platform B Adopter Fraction\
+		[complementor side])^Indirect Network Effects Strength B ~~|
+Value to Non Platform B Adopters[complementor side]=
+	Expected Quality B*Complement Value to Platform B[end user side]*(Platform B Adopter Fraction\
+		[end user side])^Indirect Network Effects Strength B
+	~	Dmnl
+	~		|
+
+Multihoming Users[end user side]= INTEG (
+	Multihoming Increment[end user side],
+		0) ~~|
+Multihoming Users[complementor side]= INTEG (
+	Multihoming Increment[complementor side],
+		0)
+	~	User
+	~		|
+
+Multihoming Increment[side]=
+	Switchers to A[side]+Switchers to B[side]
+	~	User/Month
+	~		|
+
+Expected Increment B=
+	Adopters Expectation B
+	~	1/Month
+	~		|
+
+Adopters Expectation A=
+	Platform A Adopters[end user side]/Reference Expectation A
+	~	1/Month
+	~		|
+
+Adopters Expectation B=
+	Platform B Adopters[end user side]/Reference Expectation B
+	~	1/Month
+	~		|
+
+Expected Increment A=
+	Adopters Expectation A
+	~	1/Month
+	~		|
+
+Indicated Switchers to B[side]=
+	Switch Fraction to B[side]*Platform A Adopters[side]/Response Time A[side]
+	~	User/Month
+	~	Indicated Switchers[s,i,j]=( Switch Fraction[s,i,j] * Adopters[s,i] ) / tau
+		The switcher outflow from i to j before taking into account the total possible \
+		outflow.
+		 Used to calculate the switching rate.
+	|
+
+Platform B Exit[side]=
+	IF THEN ELSE( Time>=Advertising End Time B ,Platform B Adopters[side]*Exit Rate B[side\
+		] , 0)
+	~	User/Month
+	~		|
+
+Platform A Exit[side]=
+	IF THEN ELSE(Time>=Advertising End Time A, Platform A Adopters[side]*Exit Rate A[side\
+		], 0)
+	~	User/Month
+	~		|
+
+Exit Rate B[side]=
+	0.2481,0
+	~	1/Month
+	~		|
+
+Exit Rate A[side]=
+	0.5,0.006
+	~	1/Month
+	~		|
+
+Advertising Effects A[side]=
+	IF THEN ELSE( Time>=Advertising Start Time A:AND: Time<Advertising End Time A, Advertising Effectiveness A\
+		[side]*Potential Adopters[side], 0)
+	~	User/Month
+	~		|
+
+Switch Fraction to B[side]=
+	ZIDZ(Platform B Value to Platform A Adopters[side],(Combined Value to Platform A Adopters\
+		[side]+Substitute Value A[side]))
+	~	Dmnl
+	~	Switch Fraction[s,i,j]=IF THEN ELSE ( i= j, 0, zidz ( Value to Adopters[s,i,j] , sum \
+		( Value to Adopters[s,i,j!] + V ref ) ) )
+		Switching from platform i to j. Corresponds to equation 8.
+	|
+
+Adoption Fraction B[side]=
+	ZIDZ(Value to Non Platform B Adopters[side],Value to Non Platform A Adopters[side]+Value to Non Platform B Adopters\
+		[side]+Substitute Value B[side])
+	~	Dmnl
+	~	Adoption Fraction[s,i]=zidz ( Value to Non Adopters[s,i] , sum ( Value to Non \
+		Adopters[s,i!] + V ref ) )
+		Corresponds to equation 6.
+	|
+
+Advertising Effects B[side]=
+	IF THEN ELSE( Time>=Advertising Start Time B :AND: Time<Advertising End Time B, Advertising Effectiveness B\
+		[side]*Potential Adopters[side], 0)
+	~	User/Month
+	~		|
+
+Indicated Switchers to A[side]=
+	Switch Fraction to A[side]*Platform B Adopters[side]/Response Time B[side]
+	~	User/Month
+	~		|
+
+Word of Mouth Effects A[side]=
+	ZIDZ( Contact Rate A[side]*Adoption Fraction A[side]*Platform A Adopters[side]*Potential Adopters\
+		[side], Total Population[side])
+	~	User/Month
+	~		|
+
+Adoption Fraction A[side]=
+	ZIDZ(Value to Non Platform A Adopters[side], Value to Non Platform A Adopters[side]+\
+		Value to Non Platform B Adopters[side]+Substitute Value A[side])
+	~	Dmnl
+	~	Adoption Fraction[s,i]=zidz ( Value to Non Adopters[s,i] , sum ( Value to Non \
+		Adopters[s,i!] + V ref ) )
+		Corresponds to equation 6.
+	|
+
+Word of Mouth Effects B[side]=
+	ZIDZ(Contact Rate B[side]*Adoption Fraction B[side]*Platform B Adopters[side]*Potential Adopters\
+		[side], Total Population[side])
+	~	User/Month
+	~		|
+
+Switch Fraction to A[side]=
+	ZIDZ(Platform A Value to Platform B Adopters[side] ,Combined Value to Platform B Adopters\
+		[side]+Substitute Value B[side])
+	~	Dmnl
+	~	Switch Fraction[s,i,j]=IF THEN ELSE ( i= j, 0, zidz ( Value to Adopters[s,i,j] , sum \
+		( Value to Adopters[s,i,j!] + V ref ) ) )
+		Switching from platform i to j. Corresponds to equation 8.
+	|
+
+Response Time B[side]=
+	4,16.6598
+	~	Month [0,1,0.0001]
+	~		|
+
+Complements B Sales Volume[end user side]= INTEG (
+	Complements B Sales Increment[end user side],
+		107347) ~~|
+Complements B Sales Volume[complementor side]= INTEG (
+	Complements B Sales Increment[complementor side],
+		7)
+	~	Resource Unit
+	~		|
+
+Expected Quality A= INTEG (
+	Expected Increment A-Expected Quality Depletion A,
+		Initial Quality A)
+	~	Dmnl
+	~	 Expenses[i] * p ref * ( Resources[i,dres] / Data REF ) ^ gamma - Quality[i] * qe
+		Corresponds to equation 16.
+	|
+
+Complement Value to Platform B[side]=
+	Complements B Sales Volume[side]/Reference Complement Volume B[side]
+	~	Dmnl
+	~		|
+
+Complements B Sales Increment[side]=
+	Platform B Adopters[side]*Complements B Velocity[side]
+	~	Resource Unit/Month
+	~		|
+
+Reference Complement Volume B[end user side]=
+	7.40713e+07 ~~|
+Reference Complement Volume B[complementor side]=
+	943
+	~	Resource Unit
+	~		|
+
+Expected Quality Depletion A=
+	IF THEN ELSE(Time>=Advertising End Time A, Expected Quality A*Depletion Rate A, 0)
+	~	1/Month
+	~		|
+
+Expected Quality Depletion B=
+	IF THEN ELSE(Time>=Advertising End Time B, Expected Quality B*Depletion Rate B , 0 )
+	~	1/Month
+	~		|
+
+Platform A Value to Platform A Adopters[side]=
+	Value to Non Platform A Adopters[side]
+	~	Dmnl
+	~	Value to Adopters[eu,a,a]
+		プラットフォーム品質×間接的ネットワーク効果×プラットフォ\
+		ーム内データネットワーク効果
+		(1) i=j=a　【pfaエンドユーザーへのpfa価値】
+		Value to Adopters[eu,a,a]= Value to Non Adopters[eu,a] * ( 1+ ( Data per \
+		User[a] / Ref Data per User ) ^ gamma'))
+	|
+
+Platform B Value to Platform A Adopters[side]=
+	Value to Non Platform B Adopters[side]
+	~	Dmnl
+	~	Value to Adopters[eu,a,a]
+		プラットフォーム品質×間接的ネットワーク効果×プラットフォ\
+		ーム内データネットワーク効果
+		(1) i=j=a　【pfaエンドユーザーへのpfa価値】
+		Value to Adopters[eu,a,a]= Value to Non Adopters[eu,a] * ( 1+ ( Data per \
+		User[a] / Ref Data per User ) ^ gamma'))
+	|
+
+Platform B Value to Platform B Adopters[side]=
+	Value to Non Platform B Adopters[side]
+	~	Dmnl
+	~	Value to Adopters[eu,a,a]
+		プラットフォーム品質×間接的ネットワーク効果×プラットフォ\
+		ーム内データネットワーク効果
+		(1) i=j=a　【pfaエンドユーザーへのpfa価値】
+		Value to Adopters[eu,a,a]= Value to Non Adopters[eu,a] * ( 1+ ( Data per \
+		User[a] / Ref Data per User ) ^ gamma'))
+	|
+
+Platform A Value to Platform B Adopters[side]=
+	Value to Non Platform A Adopters[side]
+	~	Dmnl
+	~	Value to Adopters[eu,a,a]
+		プラットフォーム品質×間接的ネットワーク効果×プラットフォ\
+		ーム内データネットワーク効果
+		(1) i=j=a　【pfaエンドユーザーへのpfa価値】
+		Value to Adopters[eu,a,a]= Value to Non Adopters[eu,a] * ( 1+ ( Data per \
+		User[a] / Ref Data per User ) ^ gamma'))
+	|
+
+Complement Value to Platform A[side]=
+	Complements A Sales Volume[side]/Reference Complement Volume A[side]
+	~	Dmnl
+	~		|
+
+Reference Complement Volume A[end user side]=
+	6.68753e+07 ~~|
+Reference Complement Volume A[complementor side]=
+	464
+	~	Resource Unit
+	~		|
+
+Accumulated Adopters A[end user side]= INTEG (
+	Adopters A Increment[end user side],
+		919642) ~~|
+Accumulated Adopters A[complementor side]= INTEG (
+	Adopters A Increment[complementor side],
+		11)
+	~	User
+	~		|
+
+Sales Volume A per User=
+	2
+	~	Resource Unit/User
+	~		|
+
+Complements A Sales Volume[end user side]= INTEG (
+	Complements A Sales Increment[end user side],
+		1.85346e+06) ~~|
+Complements A Sales Volume[complementor side]= INTEG (
+	Complements A Sales Increment[complementor side],
+		21)
+	~	Resource Unit
+	~		|
+
+Platform A Sales Increment=
+	Adopters A Increment[end user side]*Sales Volume A per User
+	~	Resource Unit/Month
+	~		|
+
+Platform A Sales Volume= INTEG (
+	Platform A Sales Increment,
+		919642)
+	~	Resource Unit
+	~		~	:SUPPLEMENTARY 
+	|
+
+Platform B Sales Volume= INTEG (
+	Platform B Sales Increment,
+		187836)
+	~	Resource Unit
+	~		~	:SUPPLEMENTARY 
+	|
+
+Sales Volume B per User=
+	0.9
+	~	Resource Unit/User
+	~		|
+
+Accumulated Adopters B[end user side]= INTEG (
+	Adopters B Increment[end user side],
+		187836) ~~|
+Accumulated Adopters B[complementor side]= INTEG (
+	Adopters B Increment[complementor side],
+		5)
+	~	User
+	~		|
+
+Platform A Adopter Fraction[side]=
+	Platform A Adopters[side]/Total Population[side]
+	~	Dmnl
+	~	Adpoter Fraction[sp, i]=IF THEN ELSE ( SWITCH OPEN  > 0.5,  sum ( Adopters[sp,i!] )/ \
+		N , Adopters[sp,i]/ N )
+		
+		SWITCH OPEN: 0 -> Closed Interfaces, 1 -> Open Interfaces
+	|
+
+Platform B Sales Increment=
+	Adopters B Increment[end user side]*Sales Volume B per User
+	~	Resource Unit/Month
+	~		|
+
+Platform B Adopter Fraction[side]=
+	Platform B Adopters[side]/Total Population[side]
+	~	Dmnl
+	~	SWITCH OPEN: 0 -> Closed Interfaces, 1 -> Open Interfaces
+	|
+
+Complements A Sales Increment[end user side]=
+	Platform A Adopters[end user side]*Complements A Velocity[end user side] ~~|
+Complements A Sales Increment[complementor side]=
+	Platform A Adopters[complementor side]*Complements A Velocity[complementor side]
+	~	Resource Unit/Month
+	~		|
+
+Advertising Effectiveness B[side]=
+	0.0039,0.0119
+	~	1/Month
+	~		|
+
+Contact Rate B[side]=
+	1e-05,0.3547
+	~	1/Month
+	~		|
+
+Adopters A Increment[side]=
+	New Adopters A[side]+Switchers to A[side]
+	~	User/Month
+	~		|
+
+Switchers from B to A[end user side]=
+	Indicated Switchers to A[end user side] ~~|
+Switchers from B to A[complementor side]=
+	Indicated Switchers to A[complementor side]*Complementors Switch Flag
+	~	User/Month
+	~		|
+
+Expected Quality B= INTEG (
+	Expected Increment B-Expected Quality Depletion B,
+		Initial Quality B)
+	~	Dmnl
+	~	 Expenses[i] * p ref * ( Resources[i,dres] / Data REF ) ^ gamma - Quality[i] * qe
+		Corresponds to equation 16.
+	|
+
+Adopters B Increment[side]=
+	New Adopters B[side]+Switchers to B[side]
+	~	User/Month
+	~		|
+
+Switchers from A to B[end user side]=
+	Indicated Switchers to B[end user side] ~~|
+Switchers from A to B[complementor side]=
+	Indicated Switchers to B[complementor side]*Complementors Switch Flag
+	~	User/Month
+	~	Switchers[s,i,j]= zidz (Indicated Switchers[s, i,j] , sum ( Indicated \
+		Switchers[s,i,j!])) * min ( Adopters[s,i] / TIME STEP - Discard Rate[s, i] \
+		, sum ( Indicated Switchers[s,i,j!] ))
+		The switcher outflow taking into account the total possible outflow. Used \
+		to calculate the switching rate.
+	|
+
+Complementors Switch Flag=
+	0
+	~	Dmnl
+	~		|
+
+Reference Expectation A=
+	6033.13
+	~	User*Month
+	~		|
+
+Reference Expectation B=
+	51.9356
+	~	User*Month
+	~		|
+
+Switchers to A[side]=
+	Switchers from B to A[side]
+	~	User/Month
+	~		|
+
+Combined Value to Platform B Adopters[side]=
+	Platform B Value to Platform B Adopters[side]+Platform A Value to Platform B Adopters\
+		[side]
+	~	Dmnl
+	~		|
+
+New Adopters A[side]=
+	MIN(Potential Adopters[side]/TIME STEP, Advertising Effects A[side]+Word of Mouth Effects A\
+		[side])
+	~	User/Month
+	~		|
+
+New Adopters B[side]=
+	MIN(Potential Adopters[side]/TIME STEP,Advertising Effects B[side]+Word of Mouth Effects B\
+		[side])
+	~	User/Month
+	~		|
+
+Switchers to B[side]=
+	Switchers from A to B[side]
+	~	User/Month
+	~		|
+
+Combined Value to Platform A Adopters[side]=
+	Platform A Value to Platform A Adopters[side]+Platform B Value to Platform A Adopters\
+		[side]
+	~	Dmnl
+	~		|
+
+side:
+	end user side,complementor side
+	~	
+	~		|
+
+Total Diffusion Rate[side]=
+	(Platform A Adopters[side]+Platform B Adopters[side])/Total Population[side]
+	~	Dmnl
+	~	combined adopter fraction
+	~	:SUPPLEMENTARY 
+	|
+
+Substitute Value B[side]=
+	45550.8,3.0222e+06
+	~	Dmnl
+	~		|
+
+Complements B Velocity[end user side]=
+	0.1381 ~~|
+Complements B Velocity[complementor side]=
+	0.2204
+	~	Resource Unit/(User*Month)
+	~		|
+
+Initial Quality B=
+	1
+	~	Dmnl
+	~		|
+
+Indirect Network Effects Strength B=
+	0.253
+	~	Dmnl
+	~		|
+
+Depletion Rate B=
+	0.01
+	~	1/Month
+	~		|
+
+Complements A Velocity[end user side]=
+	0.4003 ~~|
+Complements A Velocity[complementor side]=
+	0.1556
+	~	Resource Unit/(User*Month)
+	~		|
+
+Depletion Rate A=
+	0.01
+	~	1/Month
+	~		|
+
+Substitute Value A[side]=
+	1, 1e+07
+	~	Dmnl
+	~		|
+
+Initial Quality A=
+	1
+	~	Dmnl
+	~	Q0
+	|
+
+Indirect Network Effects Strength A=
+	0.1394
+	~	Dmnl
+	~		|
+
+Advertising End Time B=
+	87
+	~	Month
+	~		|
+
+Contact Rate A[side]=
+	0.9905,1e-05
+	~	1/Month
+	~		|
+
+Advertising Start Time B=
+	0
+	~	Month
+	~		|
+
+Response Time A[side]=
+	29.8852,46.7199
+	~	Month [0,1,0.0001]
+	~		|
+
+Advertising End Time A=
+	72
+	~	Month
+	~		|
+
+Advertising Effectiveness A[side]=
+	0.0001,0.0153
+	~	1/Month
+	~		|
+
+Advertising Start Time A=
+	1
+	~	Month
+	~		|
+
+Total Population[end user side]=
+	2.30476e+07 ~~|
+Total Population[complementor side]=
+	115
+	~	User
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		シミュレーション制御パラメータ
+	|
+
+FINAL TIME  = 109
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Month
+	~	シミュレーションの初期時間
+	|
+
+SAVEPER  = 1
+	~	Month [0,?]
+	~	出力が蓄えられる頻度
+	|
+
+TIME STEP  = 0.015625
+	~	Month [0,?]
+	~	シミュレーションの時間ステップ
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Dynamic Model
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,96,100,0
+10,1,Potential Adopters,987,433,40,26,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Platform A Adopters,1213,432,41,26,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,Accumulated Adopters A,1042,122,48,25,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,4,Expected Quality A,1670,713,45,22,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,5,7,2,4,0,0,22,0,0,0,-1--1--1,,1|(1135,435)|
+1,6,7,1,100,0,0,22,0,0,0,-1--1--1,,1|(1056,435)|
+11,7,0,1092,435,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,8,New Adopters A,1092,457,56,14,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,9,8,201,1,0,0,0,0,128,0,-1--1--1,,1|(1108,402)|
+10,10,Advertising Effects A,1051,582,43,18,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,11,1,10,1,0,0,0,0,128,0,-1--1--1,,1|(1028,494)|
+1,12,10,8,1,0,0,0,0,128,0,-1--1--1,,1|(1094,518)|
+10,13,Word of Mouth Effects A,1145,628,43,24,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,14,2,13,1,0,0,0,0,128,0,-1--1--1,,1|(1172,592)|
+1,15,13,8,1,0,0,0,0,128,0,-1--1--1,,1|(1107,473)|
+1,16,1,13,1,0,0,0,0,128,0,-1--1--1,,1|(1052,474)|
+10,17,Platform B Adopters,756,434,43,26,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,18,20,17,4,0,0,22,0,0,0,-1--1--1,,1|(832,436)|
+1,19,20,1,100,0,0,22,0,0,0,-1--1--1,,1|(912,436)|
+11,20,0,872,436,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,21,New Adopters B,872,456,55,12,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,22,Word of Mouth Effects B,727,608,40,25,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,23,Advertising Effects B,830,581,43,18,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,24,1,23,1,0,0,0,0,128,0,-1--1--1,,1|(952,492)|
+1,25,23,21,1,0,0,0,0,128,0,-1--1--1,,1|(888,518)|
+1,26,1,22,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,27,17,22,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,28,22,21,1,0,0,0,0,128,0,-1--1--1,,1|(810,500)|
+10,29,Total Diffusion Rate,946,789,41,26,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,30,2,29,1,0,0,0,0,128,0,-1--1--1,,1|(1139,723)|
+1,31,17,29,1,0,0,0,0,128,0,-1--1--1,,1|(684,656)|
+10,32,Total Population,966,621,32,19,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,33,32,29,0,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(0,0)|
+1,34,32,1,0,1,0,0,2,128,1,-1--1--1,|||0-0-0,1|(0,0)|
+1,35,32,22,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(828,626)|
+1,36,32,13,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1083,646)|
+1,37,2,267,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,38,40,17,4,0,0,22,0,0,0,-1--1--1,,1|(744,321)|
+1,39,40,2,100,0,0,22,0,0,0,-1--1--1,,1|(1213,227)|
+11,40,0,744,227,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,41,Switchers to B,744,249,59,14,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,42,44,2,4,0,0,22,0,0,0,-1--1--1,,1|(1188,357)|
+1,43,44,17,100,0,0,22,0,0,0,-1--1--1,,1|(756,300)|
+11,44,0,1188,300,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,45,Switchers to A,1188,323,57,15,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,46,Response Time A,1071,337,31,15,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+10,47,Indicated Switchers to B,1373,362,51,21,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,48,2,47,1,0,0,0,0,128,0,-1--1--1,,1|(1307,369)|
+1,49,46,47,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1315,351)|
+10,50,Indicated Switchers to A,474,400,48,23,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,51,17,50,1,0,0,0,0,128,0,-1--1--1,,1|(513,512)|
+10,52,Switchers from A to B,1312,294,47,18,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,53,47,52,1,0,0,0,0,128,0,-1--1--1,,1|(1324,292)|
+10,54,Advertising Start Time A,1011,752,37,25,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+10,55,Advertising Effectiveness A,1059,693,43,24,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+10,56,Advertising End Time A,1100,790,38,22,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,57,54,10,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(999,670)|
+1,58,56,10,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1113,685)|
+1,59,55,10,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1038,617)|
+10,60,Time,1001,537,22,9,8,2,1,1,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,61,60,10,0,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(0,0)|
+1,62,52,41,1,0,0,0,0,128,0,-1--1--1,,1|(1152,255)|
+10,63,Switchers from B to A,604,311,41,18,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,64,50,63,1,0,0,0,0,128,0,-1--1--1,,1|(544,333)|
+1,65,63,45,1,0,0,0,0,128,0,-1--1--1,,1|(1004,256)|
+10,66,Advertising Start Time B,783,680,37,20,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,67,60,23,0,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(0,0)|
+10,68,Advertising End Time B,884,749,36,20,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,69,66,23,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(816,624)|
+1,70,68,23,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(898,637)|
+10,71,Contact Rate A,1123,826,47,16,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,72,71,13,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1169,655)|
+10,73,Adoption Fraction A,1270,802,43,20,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,74,45,201,1,0,0,0,0,128,0,-1--1--1,,1|(1165,181)|
+10,75,TIME STEP,997,506,35,14,8,130,1,1,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,76,75,8,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1054,519)|
+1,77,75,21,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(929,508)|
+1,78,1,8,1,0,0,0,0,128,0,-1--1--1,,1|(1047,422)|
+1,79,1,21,1,0,0,0,0,128,0,-1--1--1,,1|(921,425)|
+10,80,Accumulated Adopters B,927,120,54,25,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,81,21,196,1,0,0,0,0,128,0,-1--1--1,,1|(896,304)|
+1,82,41,196,1,0,0,0,0,128,0,-1--1--1,,1|(781,163)|
+10,83,Substitute Value A,1384,809,43,18,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,84,83,73,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1354,786)|
+10,85,Platform A Adopter Fraction,1289,683,36,26,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,86,2,85,1,0,0,0,0,128,0,-1--1--1,,1|(1281,620)|
+1,87,32,85,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1054,728)|
+10,88,Initial Quality A,1702,652,35,15,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,89,88,4,1,1,0,0,2,128,1,-1--1--1,|||0-0-0,1|(1677,687)|
+10,90,Value to Non Platform A Adopters,1598,574,47,25,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,91,Platform A Value to Platform A Adopters,1617,372,55,25,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,92,Indirect Network Effects Strength A,1783,482,54,20,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,93,92,90,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1685,515)|
+1,94,4,90,1,0,0,0,0,128,0,-1--1--1,,1|(1626,619)|
+1,95,85,90,1,0,0,0,0,128,0,-1--1--1,,1|(1413,592)|
+1,96,90,91,1,0,0,0,0,128,0,-1--1--1,,1|(1648,465)|
+1,97,90,73,1,0,0,0,0,128,0,-1--1--1,,1|(1412,654)|
+1,98,73,13,1,0,0,0,0,128,0,-1--1--1,,1|(1239,721)|
+10,99,Depletion Rate A,1761,845,37,19,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,100,99,188,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1726,796)|
+10,101,Complements A Sales Volume,1721,1008,52,23,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,102,48,1569,1009,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,103,105,101,4,0,0,22,0,0,0,-1--1--1,,1|(1641,1009)|
+1,104,105,102,100,0,0,22,0,0,0,-1--1--1,,1|(1590,1009)|
+11,105,0,1608,1009,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,106,Complements A Sales Increment,1608,1039,55,22,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,107,Complements A Velocity,1468,1098,45,18,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,108,107,106,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1558,1090)|
+1,109,2,105,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,110,Platform B Value to Platform A Adopters,2026,624,55,26,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,111,Substitute Value A,1449,234,47,19,8,130,1,1,-1,0,0,0,128-128-128,0-0-0,||B|128-128-128,0,0,0,0,0,0
+10,112,Switch Fraction to B,1473,308,47,18,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,113,111,112,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1462,282)|
+10,114,Combined Value to Platform A Adopters,1592,236,54,26,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,115,91,114,1,0,0,0,0,128,0,-1--1--1,,1|(1590,304)|
+1,116,110,114,1,0,0,0,0,128,0,-1--1--1,,1|(1966,343)|
+1,117,114,112,1,0,0,0,0,128,0,-1--1--1,,1|(1507,277)|
+1,118,112,47,1,0,0,0,0,128,0,-1--1--1,,1|(1423,352)|
+10,119,Expected Quality B,513,744,42,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,120,Initial Quality B,378,671,33,17,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,121,120,119,1,1,0,0,2,128,1,-1--1--1,|||0-0-0,1|(461,691)|
+10,122,Value to Non Platform B Adopters,444,546,46,24,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,123,Platform B Value to Platform B Adopters,307,414,55,28,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,124,Indirect Network Effects Strength B,192,567,54,22,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,125,124,122,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(339,538)|
+1,126,122,123,1,0,0,0,0,128,0,-1--1--1,,1|(379,425)|
+10,127,Depletion Rate B,462,906,38,15,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,128,127,177,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(519,869)|
+10,129,Complements B Sales Volume,422,991,53,26,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,130,48,262,987,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,131,133,129,4,0,0,22,0,0,0,-1--1--1,,1|(338,987)|
+1,132,133,130,100,0,0,22,0,0,0,-1--1--1,,1|(283,987)|
+11,133,0,301,987,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,134,Complements B Sales Increment,301,1016,55,21,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,135,Complements B Velocity,444,1072,45,22,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,136,135,134,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(330,1052)|
+10,137,Platform A Value to Platform B Adopters,84,497,59,26,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,138,Switch Fraction to A,431,323,43,20,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,139,Combined Value to Platform B Adopters,324,224,55,26,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,140,123,139,1,0,0,0,0,128,0,-1--1--1,,1|(322,344)|
+1,141,137,139,1,0,0,0,0,128,0,-1--1--1,,1|(126,302)|
+1,142,139,138,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,143,129,238,1,0,0,0,0,128,0,-1--1--1,,1|(290,880)|
+1,144,17,269,1,0,0,0,0,128,0,-1--1--1,,1|(343,628)|
+1,145,17,133,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,146,119,122,1,0,0,0,0,128,0,-1--1--1,,1|(470,634)|
+10,147,Substitute Value B,697,1001,42,22,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+10,148,Substitute Value B,466,243,48,17,8,130,1,1,-1,0,0,0,128-128-128,0-0-0,||B|128-128-128,0,0,0,0,0,0
+1,149,148,138,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(443,271)|
+1,150,110,112,1,0,0,0,0,128,0,-1--1--1,,1|(1776,313)|
+1,151,137,138,1,0,0,0,0,128,0,-1--1--1,,1|(204,310)|
+1,152,138,50,1,0,0,0,0,128,0,-1--1--1,,1|(429,356)|
+10,153,Platform B Adopter Fraction,645,724,47,27,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,154,Adoption Fraction B,761,935,48,17,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,155,147,154,0,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(0,0)|
+1,156,122,154,1,0,0,0,0,128,0,-1--1--1,,1|(591,774)|
+1,157,154,22,1,0,0,0,0,128,0,-1--1--1,,1|(701,772)|
+1,158,17,153,1,0,0,0,0,128,0,-1--1--1,,1|(618,571)|
+1,159,32,153,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(686,733)|
+1,160,153,122,1,0,0,0,0,128,0,-1--1--1,,1|(568,627)|
+1,161,17,1,1,1,0,0,2,128,1,-1--1--1,|||0-0-0,1|(872,358)|
+1,162,2,1,1,1,0,0,2,128,1,-1--1--1,|||0-0-0,1|(1104,368)|
+10,163,Reference Expectation A,1466,944,39,22,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,164,163,267,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1486,928)|
+10,165,Reference Expectation B,228,901,43,19,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+10,166,Complementors Switch Flag,1329,213,47,17,8,131,2,4,0,0,0,0,-1--1--1,255-255-128,||B|0-0-0,0,0,0,0,0,0
+1,167,166,52,1,2,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1365,272)|
+12,168,48,358,740,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,169,171,119,4,0,0,22,0,0,0,-1--1--1,,1|(445,740)|
+1,170,171,168,100,0,0,22,0,0,0,-1--1--1,,1|(388,740)|
+11,171,0,414,740,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,172,Expected Increment B,414,770,40,22,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+12,173,48,502,841,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,174,176,173,4,0,0,22,0,0,0,-1--1--1,,1|(502,817)|
+1,175,176,119,100,0,0,22,0,0,0,-1--1--1,,1|(502,779)|
+11,176,0,502,796,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,177,Expected Quality Depletion B,549,796,39,23,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,178,119,177,1,0,0,0,0,128,0,-1--1--1,,1|(571,759)|
+12,179,48,1850,715,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,180,182,4,4,0,0,22,0,0,0,-1--1--1,,1|(1755,715)|
+1,181,182,179,100,0,0,22,0,0,0,-1--1--1,,1|(1823,715)|
+11,182,0,1801,715,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,183,Expected Increment A,1801,742,42,19,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+12,184,48,1667,800,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,185,187,184,4,0,0,22,0,0,0,-1--1--1,,1|(1667,778)|
+1,186,187,4,100,0,0,22,0,0,0,-1--1--1,,1|(1667,744)|
+11,187,0,1667,759,8,6,33,131,0,0,4,0,0,0,0,0,0,0,0,0
+10,188,Expected Quality Depletion A,1724,759,49,24,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,189,4,187,1,0,0,0,0,128,0,-1--1--1,,1|(1636,742)|
+10,190,Complementors Switch Flag,599,227,50,16,8,130,2,5,-1,0,0,0,128-128-128,255-255-128,||B|128-128-128,0,0,0,0,0,0
+1,191,190,63,1,2,0,0,2,128,0,-1--1--1,|||0-0-0,1|(604,250)|
+12,192,48,748,119,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,193,195,80,4,0,0,22,0,0,0,-1--1--1,,1|(844,119)|
+1,194,195,192,100,0,0,22,0,0,0,-1--1--1,,1|(781,119)|
+11,195,0,810,119,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,196,Adopters B Increment,810,149,45,22,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+12,197,48,1204,120,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,198,200,3,4,0,0,22,0,0,0,-1--1--1,,1|(1116,120)|
+1,199,200,197,100,0,0,22,0,0,0,-1--1--1,,1|(1174,120)|
+11,200,0,1148,120,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,201,Adopters A Increment,1148,148,40,20,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,202,Advertising Effectiveness B,862,671,38,21,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,203,202,23,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(847,623)|
+10,204,Contact Rate B,835,831,47,16,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,205,204,22,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(744,710)|
+10,206,Platform B Sales Volume,333,99,52,27,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,207,48,501,97,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,208,210,206,4,0,0,22,0,0,0,-1--1--1,,1|(412,97)|
+1,209,210,207,100,0,0,22,0,0,0,-1--1--1,,1|(471,97)|
+11,210,0,446,97,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,211,Platform B Sales Increment,446,127,54,22,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,212,Sales Volume B per User,467,37,46,18,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,213,196,211,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,214,212,210,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(447,87)|
+10,215,Platform A Sales Volume,1490,96,51,25,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,216,48,1319,95,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,217,219,215,4,0,0,22,0,0,0,-1--1--1,,1|(1412,95)|
+1,218,219,216,100,0,0,22,0,0,0,-1--1--1,,1|(1351,95)|
+11,219,0,1379,95,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,220,Platform A Sales Increment,1379,121,59,18,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,221,201,220,1,0,0,0,0,128,0,-1--1--1,,1|(1281,126)|
+10,222,Sales Volume A per User,1450,28,46,16,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,223,222,220,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1382,77)|
+10,224,Reference Complement Volume A,1893,563,43,23,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+10,225,Complement Value to Platform A,1900,649,43,25,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,226,101,225,1,0,0,0,0,128,0,-1--1--1,,1|(1870,896)|
+1,227,224,225,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1897,605)|
+1,228,225,90,1,0,0,0,0,128,0,-1--1--1,,1|(1767,576)|
+10,229,Advertising End Time A,1647,835,40,20,8,130,1,1,-1,0,0,0,128-128-128,0-0-0,||B|128-128-128,0,0,0,0,0,0
+1,230,229,187,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1683,782)|
+10,231,Time,1712,876,23,9,8,2,1,1,-1,0,0,0,128-128-128,0-0-0,||B|128-128-128,0,0,0,0,0,0
+1,232,231,188,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1710,818)|
+10,233,Advertising End Time B,633,914,37,18,8,130,1,1,-1,0,0,0,128-128-128,0-0-0,||B|128-128-128,0,0,0,0,0,0
+1,234,233,177,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(622,822)|
+10,235,Time,564,883,23,9,8,2,1,1,-1,0,0,0,128-128-128,0-0-0,||B|128-128-128,0,0,0,0,0,0
+1,236,235,177,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(570,832)|
+10,237,Reference Complement Volume B,152,773,41,22,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+10,238,Complement Value to Platform B,235,651,54,23,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,239,237,238,0,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(0,0)|
+1,240,238,122,1,0,0,0,0,128,0,-1--1--1,,1|(252,625)|
+10,241,Response Time B,958,336,42,15,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,242,241,50,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(676,341)|
+12,243,48,1348,433,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,244,246,243,4,0,0,22,0,0,0,-1--1--1,,1|(1322,433)|
+1,245,246,2,100,0,0,22,0,0,0,-1--1--1,,1|(1274,433)|
+11,246,0,1301,433,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,247,Platform A Exit,1301,459,35,18,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,248,Advertising End Time A,1423,519,45,19,8,130,1,1,-1,0,0,0,128-128-128,0-0-0,||B|128-128-128,0,0,0,0,0,0
+1,249,248,247,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1386,494)|
+1,250,2,247,1,0,0,0,0,128,0,-1--1--1,,1|(1269,407)|
+10,251,Exit Rate A,1460,427,35,9,8,131,1,0,0,0,0,0,0,0,0,0,0,0
+1,252,251,246,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(1355,400)|
+10,253,Time,1429,472,23,9,8,2,1,1,-1,0,0,0,128-128-128,0-0-0,||B|128-128-128,0,0,0,0,0,0
+1,254,253,247,0,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(0,0)|
+12,255,48,620,432,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,256,258,255,4,0,0,22,0,0,0,-1--1--1,,1|(645,432)|
+1,257,258,17,100,0,0,22,0,0,0,-1--1--1,,1|(692,432)|
+11,258,0,666,432,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,259,Platform B Exit,666,457,37,17,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,260,17,258,1,0,0,0,0,128,0,-1--1--1,,1|(674,411)|
+10,261,Advertising End Time B,584,501,39,19,8,130,1,1,-1,0,0,0,128-128-128,0-0-0,||B|128-128-128,0,0,0,0,0,0
+1,262,261,259,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(639,487)|
+10,263,Time,563,459,23,9,8,2,1,1,-1,0,0,0,128-128-128,0-0-0,||B|128-128-128,0,0,0,0,0,0
+1,264,263,259,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(612,469)|
+10,265,Exit Rate B,601,391,34,9,8,131,1,1,0,0,0,0,255-255-255,0-0-0,||B|0-128-0,0,0,0,0,0,0
+1,266,265,258,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(660,411)|
+10,267,Adopters Expectation A,1599,881,45,23,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,268,267,183,1,0,0,0,0,128,0,-1--1--1,,1|(1824,824)|
+10,269,Adopters Expectation B,363,839,54,18,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,270,165,269,1,1,0,0,2,128,0,-1--1--1,|||0-0-0,1|(290,883)|
+1,271,269,172,1,0,0,0,0,128,0,-1--1--1,,1|(399,800)|
+10,272,Multihoming Users,938,32,72,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,273,48,1100,31,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,274,276,272,4,0,0,22,0,0,0,-1--1--1,,1|(1032,31)|
+1,275,276,273,100,0,0,22,0,0,0,-1--1--1,,1|(1078,31)|
+11,276,0,1060,31,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,277,Multihoming Increment,1060,59,52,20,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,278,44,277,1,0,0,0,0,128,0,-1--1--1,,1|(1277,144)|
+1,279,40,277,1,0,0,0,0,128,0,-1--1--1,,1|(731,116)|
+10,280,Mutlhomig Ratio,682,46,52,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,281,272,280,1,17,0,0,0,64,0,-1--1--1,,1|(738,9)|
+1,282,3,280,1,0,0,0,0,128,0,-1--1--1,,1|(965,87)|
+1,283,80,280,1,0,0,0,0,128,0,-1--1--1,,1|(742,74)|
+1,284,90,154,1,0,0,0,0,128,0,-1--1--1,,1|(1018,1001)|
+1,285,90,137,1,0,0,0,0,128,0,-1--1--1,,1|(209,731)|
+1,286,122,73,1,0,0,0,0,128,0,-1--1--1,,1|(973,873)|
+1,287,122,110,1,0,0,0,0,128,0,-1--1--1,,1|(1491,995)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Graph Output
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,96,100,0
+12,1,0,1054,46,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+Platform A Adopters[end user side],Graph
+12,2,0,1055,353,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+Platform B Adopters[end user side],Graph
+12,3,0,448,42,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+Platform A Adopter Fraction,Graph
+12,4,0,445,350,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+Platform B Adopter Fraction,Graph
+12,5,0,-221,604,102,108,3,188,0,0,2,0,0,0,0,0,0,0,0,0
+Expected Quality A,グラフ 
+12,6,0,-223,819,101,103,3,188,0,0,2,0,0,0,0,0,0,0,0,0
+Expected Quality B,グラフ 
+12,7,0,146,44,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+Complements A Sales Volume[end user side],Graph
+12,8,0,139,349,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+Complements B Sales Volume[end user side],Graph
+12,9,0,1638,678,177,164,3,188,0,0,2,0,0,0,0,0,0,0,0,0
+Platform A Sales Volume,Graph
+12,10,0,1270,678,167,163,3,188,0,0,2,0,0,0,0,0,0,0,0,0
+Platform B Sales Volume,Graph
+12,11,0,756,44,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+Platform A Adopters[complementor side],Graph
+12,12,0,745,350,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+Platform B Adopters[complementor side],Graph
+12,13,0,-165,39,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+Complements A Sales Volume[complementor side],グラフ 
+12,14,0,-170,345,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+Complements B Sales Volume[complementor side],グラフ 
+12,15,0,930,682,155,165,3,188,0,0,2,0,0,0,0,0,0,0,0,0
+Switchers from A to B[side],Graph
+12,16,0,598,677,161,163,3,188,0,0,2,0,0,0,0,0,0,0,0,0
+Switchers from B to A[side],Graph
+12,17,0,1665,45,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+New Adopters A[end user side],Graph
+12,18,0,1364,46,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+New Adopters A[complementor side],Graph
+12,19,0,1665,356,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+New Adopters B[end user side],Graph
+12,20,0,1361,354,150,150,3,44,0,0,2,0,0,0,0,0,0,0,0,0
+New Adopters B[complementor side],Graph
+12,21,0,212,674,203,161,3,188,0,0,2,0,0,0,0,0,0,0,0,0
+Mutlhomig Ratio,Graph
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*表示 3
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,96,100,0
+///---\\\
+:L<%^E!@
+1:1_Wii-PS3_Model1_1.vdfx
+1:Wiititleopte.vdfx
+1:Wiipublisheropte.vdfx
+1:Wiipfmopte.vdfx
+1:Wiiperformanceopte.vdfx
+1:PS3titleopte.vdfx
+1:PS3salesvolumeopte.vdfx
+1:PS3publisheropte.vdfx
+1:PS3pfmopte.vdfx
+4:Time
+5:Mutlhomig Ratio[side]
+6:end user side
+9:1_Wii-PS3_Model1_1
+19:100,0
+24:0
+25:109
+26:109
+22:Year,年
+11:DS_PSP_MHG競争2_221103.voc
+100:DS_PSP_MHG競争2_221103.voc
+12:Wii_PS3_datasetfiles.vpd
+13:PS3pfmopte.vdfx,PS3publisheropte.vdfx,PS3salesvolumeopte.vdfx,PS3titleopte.vdfx,Wiiperformanceopte.vdfx,Wiipfmopte.vdfx,Wiipublisheropte.vdfx,Wiititleopte.vdfx
+18:協業と競争感度分析2_20221009.vsc
+20:協働と競争感度分析_20221009.lst
+15:1,0,0,0,0,0
+27:0,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:0
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Times New Roman|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
