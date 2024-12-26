@@ -3,6 +3,8 @@ The following is written in Japanese:
 
 Vensim_Models -> 日本語で作成されたシステムダイナミクス（SD）モデルとデータ。Vensim_eModels -> 英語で作成されたシステムダイナミクス（SD）モデルとデータ。
 
+Julia_Models -> Juliaコードで作成された動的モデルとデータ。実行結果の一般線形/非線形回帰モデル。
+
 これらのモデルファイルを実行するためには有償版のVemsim ProfessionalあるいはVensom DSSが必要である。モデル内の変数と定数名は日本語で表記されている。
 
 Vensimは、Version10以降、モデルの表記法を独自形式に変更した。従来のシステム・ダイナミクスの表記法に変更してモデルを表示するためには、以下の指定を行う。
