@@ -1,4 +1,5 @@
 # Chapter_3_Platform_Competition
+The following is written in Japanese:
 
 Vensim_Models -> 日本語で作成されたシステムダイナミクス（SD）モデルとデータ。Vensim_eModels -> 英語で作成されたシステムダイナミクス（SD）モデルとデータ。
 
