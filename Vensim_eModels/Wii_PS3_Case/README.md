@@ -6,7 +6,7 @@ Vensim has changed the notation of models to its own format since Version 10. To
 
 ［Select the View icon -> “Traditional Sketch Style”.
 
-DS and PSP inter-platform competition model -> DS_PSP_eModel
+DS and PSP inter-platform competition model -> DS_PSP_Case
 
-Wii and PS3 inter-platform competition model -> Wii_PS3_eModel
+Wii and PS3 inter-platform competition model -> Wii_PS3_Case
 
