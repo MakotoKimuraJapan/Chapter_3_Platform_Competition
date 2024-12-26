@@ -1,6 +1,6 @@
 The following is written in Japanese:
 
-Microsoft Visual Studio CodeとJulia 1.10以上を利用した実行が可能。
+Microsoft Visual Studio CodeとJulia 1.10以上を利用した実行を確認した。
 
 DS-PSP間プラットフォーム競争の時系列変化グラフ出力 と評価 -> dspsppfmcomp.jpynb
 
