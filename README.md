@@ -1,6 +1,8 @@
 # Chapter_3_Platform_Competition
 The following is written in Japanese:
 
+DSとPSP間プラットフォーム競争モデル -> DS_PSP. WiiとPS3間プラットフォーム競争モデル -> Wii_PS3.
+
 Vensim_Models -> 日本語で作成されたシステムダイナミクス（SD）モデルとデータ。Vensim_eModels -> 英語で作成されたシステムダイナミクス（SD）モデルとデータ。
 
 Julia_Models -> Juliaコードで作成された動的モデルとデータ。実行結果の一般線形/非線形回帰モデル。
