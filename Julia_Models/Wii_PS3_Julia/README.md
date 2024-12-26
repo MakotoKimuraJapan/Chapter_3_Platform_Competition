@@ -9,3 +9,4 @@ Wii-PS3間プラットフォーム競争結果の等高線図出力 -> contourWi
 Wii-PS3間プラットフォーム競争結果の等高線図回帰推定と評価 -> estimateMHG_WiiPS3comp.jpynb
 
 Wii-PS3事例の近似計算結果
+![Chapter_3_Fig_3_5](https://github.com/user-attachments/assets/f32b2565-7e2f-4b6d-a857-038ddeac54df)
