@@ -13,6 +13,6 @@ Vensimは、Version10以降、モデルの表記法を独自形式に変更し�
 
 ［ビュー］アイコン→「伝統的なスケッチスタイル」を選択する。
 
-プラットフォーム競争の動的モデル　
+WiiとPS3間プラットフォーム競争の動的モデル　
 
 ![Chapter_3_Fig_3_3](https://github.com/user-attachments/assets/0c9dd133-73fd-4b75-9de0-f684c4a41d99)
