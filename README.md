@@ -36,3 +36,5 @@ Model 0: Multiply the network effect coefficient by the intersection of the numb
 Model 1: Multiply the network effect coefficient only by the degree of change in the number of recruits on the other side (formulation of the cross-side network effect) -> 1_DS_PSP_eModel.mdl, 1_Wii_PS3_eModel.mdl.
 
 Model 2: Multiply the network effect coefficient only by the degree of change in complements on the other side (formulation of indirect network effect)-> 2_DS_PSP_eModel.mdl, 2_Wii_PS3_eModel.mdl.
+
+![Wii-PS3_e](https://github.com/user-attachments/assets/6b29304c-6c32-4113-8a49-20b5512faa22)
